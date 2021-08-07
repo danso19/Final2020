@@ -95,6 +95,31 @@ Among the men 58% got covid-19 after taking the vaccine,while only approximately
 The odds of contracting covid-19 while taking the vaccine were 3:2, the men that took the drug were one and a half times more likely to get covid-19 than those taking the placebo.
 
 
+### Inferential
+
+
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+guysfish <- fisher.test(table1)
+guysfish
+```
+
+
+This is very importan information to pay close attention to, as among all of the previous results this is the  Fishers exact test, which we can see that the p-value is extremely small at 0.0006181, this is a tremendously small number meaning thay these results are extremely unlikely to happen by chance.
+
+
+
+The null hypothesis predicted that the deaths related to covid-19 are indipendent of sex, scince it is clear that sex does play a role in the death rate of individuals,, the alternative hypothesis, that there is a correlation between covid-19 deaths, and sex is a favorable option.
+
+The odd ratio above illustartes a ratio of 0.68, in the guys(men) who recived the vaccine were 1.5 times more likely to contract covid-19 contrary to those who revieved the placeo.
+
+
+```{r}
+effect
+```
+
 
 
 
