@@ -19,28 +19,58 @@ require(forcats)
 OldData <-read.csv(file="covid91.csv",header=TRUE)
 #recode to remove the annoying "X" from the dataframe
 FinalData <- OldData %>% mutate(infected = recode(infected, aids = "covid", none = "OK" )) %>% select(-one_of("X"))
-FinalData$treatment <- as.factor(FinalData$treatment)
-FinalData$sex <- as.factor(FinalData$sex)
-FinalData$infected <- as.factor(FinalData$infected)
-FinalData$LGBTQ <- as.factor(FinalData$LGBTQ)
-FinalData$DrugUser <- as.factor(FinalData$DrugUser)
+FinalData <- FinalData %>%
+mutate(across(where(is.character), as.factor))
+FinalData$treatment <- relevel(FinalData$treatment,ref = "placebo")
+#FinalData$treatment <- relevel(FinalData$treatment,ref = "OK")      
+guy = filter(FinalData, sex =="guy")
+gal = filter(FinalData, sex =="gal")
+gay = filter(FinalData, LGBTQ =="gay")
+Druguser = filter(FinalData, DrugUser =="yes")
 ```
 
 # Introduction
 
 A new  preventative vaccine (covid 19) is under test in clinical trials. Given the nature of this vaccine it is suspected that the drug may exhibit different effectiveness across the variety of subpopulations tracked. Consider population subgroups by gender( guys and gals), drug use, and sexual orientation. Write a complete report that separately considers this drug for each subgroup and your recommendations as to whether people in the subgroup should take the vaccine. Structure your report in four sections each devoted to one of the four subgroups, use null and alternative hypothesis statements and correct statistical verbiage when referencing p-values in conclusions.
 
+# Coding details
 
-# Guys "sex= guy"
+First the variables from FinalData needed to be changed from character variables into factor variables. The appropiate dplyr code was used to do this. The following code was used to achive this :
+
+FinalData <- FinalData %>%
+mutate(across(where(is.character), as.factor))
+
+Next, specific subgroups had to be seperated from the broader categories in order to be properly studied. gal and guy were separted into subgroups, as well as gay sexual orientation and people that answered yes to participating in drug use . All of these categories are isolated to see wether or not these particular populations should or should not take the new Covid-19 vaccine.
+
+In order to create the effectiveness intgerval for all the four categories,each group of people in the study had to be stored in seperate variables.
 
 
-# Gals "sex = gal"
+
+# Guys
+
+### Barplot
 
 
-# Sexual orientation "LGBTQ = Gay"
+
+```{r}
+dd2 <- guy %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
 
 
-# Drug User "Drug User = Yes"
+# the group_by followed by summerize(count=n())
+
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+# Now for percentage Plot
+
+basicC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+```
+
+
+
+
+
 
 
 
