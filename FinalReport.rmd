@@ -163,6 +163,7 @@ This plot represents the populations of gals (females) and the relationship to t
 This chart is very different from the one above of guys, as it appears that more people who were only given the placebo contracted covid-19, as only approximatly 33% of the people given the vaccine contracted the virus,, meaning that around 67% of the people that contracted covid 19 were people that were only administered the placebo, it appears that the odds of contracting covid while vaccinated in this groop are 1:2, as the gals thhat took the vaccine were 1/2 likely to contract covid.
 
 
+From the two plots we see that in the firts graph the y-axis represents the count or number of people that either or didnt get covid-19, while the x-axis in the second grapgh does the same, but the y-axis now represents the number of people who contracted covid-19.
 
 
 
@@ -170,59 +171,89 @@ This chart is very different from the one above of guys, as it appears that more
 
 
 
+### Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment,data = gal)
+rowPerc(table1)
+colPerc(table1)
+```
+
+
+
+From this we can see that those who took it that 33% were vaccinated and also contraccted covid-19 and on the contrary the oppisate was 66% on gals that took the placebo and contracted covid-19 thus making it effective
+The odds of contracting covid while a gal were 1:2 compared to those who only took the placebo.
+
+
+### inferential 
+
+
+
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+galsfish <- fisher.test(table1)
+galsfish
+```
+
+
+
+This graph allows us to see that the p-vaulue would be 4e-16, an extremely tiny nummber so this allows us to see the alternative hypothesis as the favorable one,
+
+
+the fishers exact test illustrates an odds ratio of 2. meaning that gals who got the vaccine were about 0.49 times more likely to get covid-19 in comparrison to those who recived only the placebo.
+
+
+
+```{r}
+effect <- galsfish$p.value/(galsfish$p.value +1)
+effectivenessgal = galsfish$estimate/(galsfish$estimate +1)*100
+print(effectivenessgal)
+```
+
+```{r}
+low=(galsfish$conf.int[1]/(galsfish$conf.int[1] +1))*100
+hi=(galsfish$conf.int[2]/(galsfish$conf.int[2] +1))*100
+options(digits = 2)
+```
+
+### effectiveness confidence interval 'r low' to 'r hi'
 
 
 
 
 
 
+If the effectiveness of the vaccine is 50% and above then it is considered effective and as we see above from all the data we would consider the vaccine effective in protecting gals againts covid-19
+
+the hallmark of this vaccine is of around 60% so it is deemed effective to protect gals.
+
+The odds ratio is approximatly above a 67, thus the effective confidence interval for gals is between 63.15 and 70.99
 
 
 
 
 
 
+# Gay sexual orientation 
+
+### Barplot
+
+```{r}
+dd2 <- gay %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
 
 
+# the group_by followed by summerize(count=n())
 
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
 
+# Now for percentage Plot
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+basicC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+```
 
 
 
