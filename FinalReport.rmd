@@ -113,7 +113,7 @@ This is very importan information to pay close attention to, as among all of the
 
 The null hypothesis predicted that the deaths related to covid-19 are indipendent of sex, scince it is clear that sex does play a role in the death rate of individuals,, the alternative hypothesis, that there is a correlation between covid-19 deaths, and sex is a favorable option.
 
-The odd ratio above illustartes a ratio of 0.68, in the guys(men) who recived the vaccine were 1.5 times more likely to contract covid-19 contrary to those who revieved the placeo.
+The odd ratio above illustrates a ratio of 0.68, in the guys(men) who recived the vaccine were 1.5 times more likely to contract covid-19 contrary to those who recieved the placebo.
 
 
 ```{r}
@@ -293,17 +293,99 @@ gaysfish <- fisher.test(table1)
 gaysfish
 ```
 
+From this grapg we can see that the p-value had a number equal to 1e-05 which is moderetly high compares to the other grapgh giving us the 95 percent confidence interval between 26. to 61 as the odds ratio was of 0.4
+
+
+```{r}
+effect <- gaysfish$p.value/(gaysfish$p.value +1)
+effectivenessgay = gaysfish$estimate/(gaysfish$estimate +1)*100
+print(effectivenessgay)
+```
+
+```{r}
+low=(gaysfish$conf.int[1]/(gaysfish$conf.int[1] +1))*100
+hi=(gaysfish$conf.int[2]/(gaysfish$conf.int[2] +1))*100
+options(digits = 2)
+```
+
+### effectiveness confidence interval 'r low' to 'r hi'
+
+From this we were able to see and concluse that the confidence interval rate was 1:2 which would be between 63.14to 70.99
+thus thiw would mean that we would not recoment the vaccine for the LBGTQ community scince they are better off without a vaccintion otherwise they are three times as likely to conrtact covid-19 if they are vaccinated.
+
+
+# DrugUsers
+
+### Barplot
+
+```{r}
+dd2 <- Druguser %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summerize(count=n())
+
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+# Now for percentage Plot
+
+basicC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+```
 
 
 
+From this graoh we can see that those who didnt contract covid was about the sme of those who did and didnt take the placebo or drub, but we can see that around 65% of those who took the placebo did contract covid and arounf 30% of those who took the vaccination contracted covid.
 
 
+### Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment,data = Druguser)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The numerical resuslts allow us to see that the ratio was approximatly 1:2 when it comes to the ratio of determinig those who contracted covid and those hwo didnt when takening the vaccine.
 
 
+### Inferential
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+Drugusersfish <- fisher.test(table1)
+Drugusersfish
+```
+
+From the inferential results we can see that the  p-value was one of 0.003 as the odds ratio was 1.8 as almost half of those contracted covid when vaccinated compared to those who took the placbo in this group.
 
 
+```{r}
+effect <- Drugusersfish$p.value/(Drugusersfish$p.value +1)
+effectivenessDruguser = Drugusersfish$estimate/(Drugusersfish$estimate +1)*100
+print(effectivenessDruguser)
+```
+
+```{r}
+low=(Drugusersfish$conf.int[1]/(Drugusersfish$conf.int[1] +1))*100
+hi=(Drugusersfish$conf.int[2]/(Drugusersfish$conf.int[2] +1))*100
+options(digits = 2)
+```
+
+### effectiveness confidence interval 'r low' to 'r hi'
+
+If the effectiveness of the vaccine is 50% and above then it is considered effective and as we see above from all the data we would consider the vaccine effective in protecting gals againts covid-19
+
+the hallmark of this vaccine is of around 55% so it is not effective to protect Drugusers.
+
+The odds ratio is approximatly above a 66, thus the effective confidence interval for gals is between 54.96 and 73.63 so it would be deemed effective.
 
 
+# Conculsions'
+we can say in fact the covid and sex, and it vaccine and placebo for that vaccine are in fact connected as it would come to see that the highest affected group of covid with vacinations is that of the group who identity with the "gay" population as they were almost 3 times more likely to contract covid with a vaccine then with the placebo, so they would be better off withhout the vaccine, As for the "gals" they were in fact the most resistant group to contract covid, as with a vaccine shot only around 33% of those gals who were vacccinated did contract the virus and thus gave us the group with the highest efficacy the ratio being 1:2, "guys" had a T odd ratio of were 1.5 times more likely to contract covid-19 contrary to those who recieved the placebo thus leaving them in second place of stronges efficacy, and finally the drug user group was third in vaccine efficacy as around 55% of them who were vacinated contracted the virusl but by all means we can see that the efficacy of the vaccine heavily depends on sexual orientation.
+ 
 
 
+If the effectiveness of the vaccine is 50% and above then it is considered effective and as we see above from all the data we would consider the vaccine effective in protecting gals againts covid-19
 
