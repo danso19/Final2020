@@ -70,6 +70,40 @@ basicC + geom_bar(stat="identity",position="dodge")
 
 
 
+This plot represents the population of guys(males) people and the relationship to the contraction of covid-19 and either taking the vaccine or the placebo.
+
+
+The plot above shows amazingly that 58% of the people that took the vaccine did in fact get covid-19, while only approximatly 42% of the people taking the placebo contracted covid-19 in contrary to those who were only given the placebo, in this model the vaccine appears to be innefective in protecting the population againts covid-19, the odds of contracting covid-19 while taking the vaccine is 3:2. The guys that took the drug were one and a half times more likely to get covid-19 than those taking the placebo.
+
+
+In the first plot the x-axis represents the infected, and wether those participatns were infected or not, as the y-axis represented the number of people that contracted covid-19. In the second plot the two left bars represent all the people that contracted covid-19, while the x-axis represents wether they got covid-19 or not, and now represents the people that got covid-19 and if they took the placebo or not.
+
+
+
+The codes that create this plot start with the code block begining with dd2,dd2 can be seen in the enviorment pane and if inspected contains 4 variables., These varibvles include the infected ,treatment, count,and prcnt(percent), the second group of codes is called the basicC, which also can be seen in the enviorment pane and contains a total of 9 varibales , this information helps us create the first plot the basicC is also in the files pane and also includes 9 variables which create the second plot.
+
+### numerical Results
+
+```{r}
+table1 <- xtabs(~infected + treatment,data = guy)
+rowPerc(table1)
+colPerc(table1)
+```
+
+These numerical results show specific percentages of guys(men) that got covid-19 after taking the placebo and taking the vaccine.
+Among the men 58% got covid-19 after taking the vaccine,while only approximately 42% of the guys given the placebo contracted covid-19,this allows us to see that the vaccine is  not effective and would not be recomended in guys(males) because those who took the vaccine actually had a higher chance to contract covid.
+The odds of contracting covid-19 while taking the vaccine were 3:2, the men that took the drug were one and a half times more likely to get covid-19 than those taking the placebo.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
