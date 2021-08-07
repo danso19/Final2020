@@ -128,7 +128,7 @@ hi=(guysfish$conf.int[2]/(guysfish$conf.int[2] +1))*100
 options(digits = 2)
 ```
 
-### effectiveness confidence interval 'r low' to 'r hi'
+## effectiveness confidence interval 'r low' to 'r hi'
 
 
 
@@ -257,6 +257,41 @@ basicC + geom_bar(stat="identity",position="dodge")
 
 
 
+This graph reprsents the connection between people who either took a vaccination , a placebo, and those in total who contrected covid-19
+
+in this barplot we are able to see that around 71% of individuals who took the vaccine also contracted covid in comparrison to those who just took the placebo as it was 29% so those who identified as gay were three times as likely to contract covid-19 and took the vaccine in comparison tho those who just took the placebo.
+
+
+
+
+these contained a list of 9 varibles in the windows pane.
+
+
+
+### Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment,data = gay)
+rowPerc(table1)
+colPerc(table1)
+```
+
+These results show that those who identified as gay and took the vaccine that a high figure of 71% of them contracted covid , this allows us to see that the covid-19 vacine is not recomendable to the LGBTQ comunity, as those who only took the placibo contracted at a rate of 29% so the rate stands at 2.5:1
+
+
+
+
+
+
+
+### Inferential
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+gaysfish <- fisher.test(table1)
+gaysfish
+```
 
 
 
