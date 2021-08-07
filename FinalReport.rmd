@@ -117,8 +117,116 @@ The odd ratio above illustartes a ratio of 0.68, in the guys(men) who recived th
 
 
 ```{r}
-effect
+effect <- guysfish$p.value/(guysfish$p.value +1)
+effectivenessguy = guysfish$estimate/(guysfish$estimate +1)*100
+print(effectivenessguy)
 ```
+
+```{r}
+low=(guysfish$conf.int[1]/(guysfish$conf.int[1] +1))*100
+hi=(guysfish$conf.int[2]/(guysfish$conf.int[2] +1))*100
+options(digits = 2)
+```
+
+### effectiveness confidence interval 'r low' to 'r hi'
+
+
+
+above is the effectiveness for covid 19 vaccine for males(guys) , if the effectiveness  is above 50% that means that the vaccine is effective, based on the interval seen above, we can conclude that the vaccine is innefective in protecting guys from contracting covid-19.
+
+The odds ratio is approximately how effective the vaccine is, as we can see the odds ratio above for men is 40, the effectiveness confidence interval for men is 35.09 to 45.94
+
+
+# Gals
+
+
+### Barplot
+
+
+```{r}
+dd2 <- gal %>% group_by(infected,treatment) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summerize(count=n())
+
+basicC <- ggplot(dd2,aes(x=infected,y=count,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+
+# Now for percentage Plot
+
+basicC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment))
+basicC + geom_bar(stat="identity",position="dodge")
+```
+
+This plot represents the populations of gals (females) and the relationship to the contraction of covid-19 by either taking the vaccine or the plcebo.
+
+This chart is very different from the one above of guys, as it appears that more people who were only given the placebo contracted covid-19, as only approximatly 33% of the people given the vaccine contracted the virus,, meaning that around 67% of the people that contracted covid 19 were people that were only administered the placebo, it appears that the odds of contracting covid while vaccinated in this groop are 1:2, as the gals thhat took the vaccine were 1/2 likely to contract covid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
